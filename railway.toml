@@ -2,13 +2,9 @@
 builder = "DOCKERFILE"
 
 [deploy]
-# Restart on non-zero exit -- the entrypoint fatal-exits if the
-# required PUBLISH_USER/PASSWORD env vars are missing, so a misconfig
-# is a boot-crash-loop rather than a silent public-write-open server.
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 3
 
-# Healthcheck via ntfy's built-in /v1/health endpoint. Slow start
-# window covers auth DB bootstrap + first server tick.
-healthcheckPath = "/v1/health"
-healthcheckTimeout = 30
+# GET / returns 200 -- see server.js's health branch.
+healthcheckPath = "/"
+healthcheckTimeout = 10
